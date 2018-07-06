@@ -24,7 +24,7 @@
 
 <?php
     function search_contact($name,$conn){
-        $query = "select `phone no` from phonebook where name like'%".mysqli_real_escape_string($conn,$name)."%'";
+        $query = "select `phone no` from contacts where name like'%".mysqli_real_escape_string($conn,$name)."%'";
         $query_run = mysqli_query($conn,$query);
         if($query_run){
             if(mysqli_num_rows($query_run)==NULL){
@@ -33,7 +33,7 @@
             else{
                 while($query_row = mysqli_fetch_assoc($query_run)){
                     $phone_no = $query_row['phone no'];
-                    $full_name = mysqli_fetch_assoc(mysqli_query($conn,"select name from phonebook where `phone no`='".mysqli_real_escape_string($conn,$phone_no)."'"));
+                    $full_name = mysqli_fetch_assoc(mysqli_query($conn,"select name from contacts where `phone no`='".mysqli_real_escape_string($conn,$phone_no)."'"));
                     echo '<br>contact no of '.$full_name['name'].' is '.$phone_no;
                 }
             }
@@ -44,7 +44,7 @@
     }
 
     function save_contact($name,$number,$conn){
-        $query = "insert into phonebook values(NULL,'".mysqli_real_escape_string($conn,$name)."','".mysqli_real_escape_string($conn,$number)."')";
+        $query = "insert into contacts values(NULL,'".mysqli_real_escape_string($conn,$name)."','".mysqli_real_escape_string($conn,$number)."')";
         if($query_run = mysqli_query($conn,$query)){
             echo '<br><br>contact saved!!!!';
         }
